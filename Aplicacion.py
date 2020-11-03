@@ -7,15 +7,77 @@
 
 
 import marshal
+import os
 import os.path as path
 from os import remove
 
+def nuevoUsuario():
+  usuario = input("Digite su usuario: ")
+  password = None
+  mayuscula = 0
+  minuscula = 0
+  numero = 0
+  espacio = 0
+  while True:
+    password = input("Digite su contraseña: ")
+    if len(password) < 8:
+      print("La contraseña debe tener al menos mas de 8 caracteres")
+    else:
+      for contenido in password:
+        if contenido.islower() == True:
+          minuscula += 1
+        elif contenido.isupper() == True:
+          mayuscula += 1
+        elif contenido.isdigit() == True:
+          numero += 1
+        else:
+          if contenido.isspace() == True:
+            espacio += 1
+      if minuscula >= 1:
+        if mayuscula >= 1:
+          if numero >= 1:
+            if espacio >= 1:
+              print("La contraseña no puede tener espacios en blanco")
+            else:
+              break
+          else:
+            print("La contraseña debe tener como minimo un caracter numerico")
+        else:
+          print("La contraseña debe tener como minimo un caracter en mayuscula")
+      else:
+        print("La contraseña debe tener como minimo un caracter en minuscula")
+  if path.exists("usuarios"):
+    print("")
+  else:
+    os.mkdir("usuarios")
+  archivo = open(f"usuarios/{usuario}", "w")
+  archivo.write(usuario + "\n")
+  archivo.write(password)
+  archivo.close()  
+
+def loguearse(usuario, password):
+  listaArchivos = os.listdir("usuarios")
+  if usuario in listaArchivos:
+    archivo = open(f"usuarios/{usuario}", "r")
+    verificacion = archivo.read().splitlines()
+    if password in verificacion:
+      print("\nTe has logueado con exito")
+    else:
+      print("Contraseña incorrecta")
+  else:
+    print("Usuario incorrecto")
+  
 def bienvenida():
   print("—————— SOFTWARE BY MEDINEERS ——————")
   print("")
   print("——————————— Bienvenid@ ————————————")
   print("——————————————— a —————————————————")
   print("——————————— Psycho 19 —————————————")
+
+def menuPrincipal():
+  print("\n1. Iniciar sesion")
+  print("2. Registrarse")
+  print("0. Salir.")
   
 def menu():
   print("\n1. Registrar paciente")
@@ -24,7 +86,32 @@ def menu():
   print("4. Ver total pacientes")
   print("5. Borrar datos")
   print("0. Salir.")
-  
+
+bienvenida()
+opcionPrincipal = None
+while True:
+  menuPrincipal()
+  while True:
+    try:
+      opcionPrincipal = int(input("\nDigite el numero deseado [0,1,2]: "))
+      print("")
+    except ValueError:
+      print("\nSolo se recibe numeros enteros")
+    else:
+      if opcionPrincipal >=0 and opcionPrincipal <= 2:
+        break
+      else:
+        print("Numero invalido")
+        print("Por favor digitelo nuevamente")
+  if opcionPrincipal == 1:
+    usuario = input("Digite su usuario: ")
+    password = input("Digite su contraseña: ")
+    loguearse(usuario, password)
+    break
+  if opcionPrincipal == 2:
+    nuevoUsuario()
+  if opcionPrincipal == 0:
+    exit()
 opcion = None
 pacientes = []
 if path.exists("pacientes"):
@@ -35,7 +122,6 @@ else:
   archivo = open("pacientes","bw")
   marshal.dump(pacientes,archivo)
   archivo.close()
-bienvenida()
 while opcion != 0:
   menu()
   while True:
