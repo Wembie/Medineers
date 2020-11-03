@@ -63,11 +63,11 @@ def loguearse(usuario, password):
       verificacion = archivo.read().splitlines()
       if password in verificacion:
         print("\nTe has logueado con exito")
-        break
+        return True
       else:
-        print("Contraseña incorrecta")
+        print("\nContraseña incorrecta")
     else:
-      print("Usuario incorrecto")
+      print("\nUsuario incorrecto")
   else:
     print("No hay usuarios en la base de datos")
   
@@ -110,7 +110,8 @@ while True:
   if opcionPrincipal == 1:
     usuario = input("Digite su usuario: ")
     password = input("Digite su contraseña: ")
-    loguearse(usuario, password)
+    if loguearse(usuario, password) is True:
+      break
   if opcionPrincipal == 2:
     nuevoUsuario()
   if opcionPrincipal == 0:
