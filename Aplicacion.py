@@ -57,15 +57,19 @@ def nuevoUsuario():
 
 def loguearse(usuario, password):
   listaArchivos = os.listdir("usuarios")
-  if usuario in listaArchivos:
-    archivo = open(f"usuarios/{usuario}", "r")
-    verificacion = archivo.read().splitlines()
-    if password in verificacion:
-      print("\nTe has logueado con exito")
+  if len(listaArchivos) > 0:
+    if usuario in listaArchivos:
+      archivo = open(f"usuarios/{usuario}", "r")
+      verificacion = archivo.read().splitlines()
+      if password in verificacion:
+        print("\nTe has logueado con exito")
+        break
+      else:
+        print("Contraseña incorrecta")
     else:
-      print("Contraseña incorrecta")
+      print("Usuario incorrecto")
   else:
-    print("Usuario incorrecto")
+    print("No hay usuarios en la base de datos")
   
 def bienvenida():
   print("—————— SOFTWARE BY MEDINEERS ——————")
@@ -107,7 +111,6 @@ while True:
     usuario = input("Digite su usuario: ")
     password = input("Digite su contraseña: ")
     loguearse(usuario, password)
-    break
   if opcionPrincipal == 2:
     nuevoUsuario()
   if opcionPrincipal == 0:
