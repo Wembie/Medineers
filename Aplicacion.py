@@ -45,6 +45,7 @@ while opcion != 0:
         for i in range(len(pacientes)):
           if pacientes[i][0] == cedula:
             print(f"La cedula {cedula} ya esta registrada")
+            break
         break
     print(f"El paciente {nombreCompleto}")
     print("Ha sido registrado con exito!")
@@ -68,6 +69,7 @@ while opcion != 0:
       if pacientes[i][0] == cedula:
         print(f"El nombre del paciente es: {pacientes[i][1]}")
         encontroCedula = 1
+        break
     if encontroCedula is None:
       print("No se ha encontrado la cedula")       
   if opcion == 3:
