@@ -14,4 +14,8 @@ while opcion != 0:
     except ValueError:
       print("Solo se recibe numeros enteros")
     else:
-      break
+      if opcion >=0 and opcion <= 4:
+        break
+      else:
+        print("Numero invalido")
+        print("Por favor digitelo nuevamente")        
