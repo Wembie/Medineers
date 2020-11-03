@@ -36,6 +36,7 @@ while opcion != 0:
     paciente = []
     nombreCompleto = input("Digite su nombre completo: ")
     cedula = None
+    encontroCedula = None
     while True:
       try:
         cedula = int(input("Digite su cedula: "))
@@ -45,8 +46,10 @@ while opcion != 0:
         for i in range(len(pacientes)):
           if pacientes[i][0] == cedula:
             print(f"La cedula {cedula} ya esta registrada")
+            encontroCedula = 1
             break
-        break
+        if encontroCedula is None:
+          break
     print(f"El paciente {nombreCompleto}")
     print("Ha sido registrado con exito!")
     paciente.append(cedula)
@@ -94,7 +97,8 @@ while opcion != 0:
   if opcion == 4:
     print("——— Pacientes ———")
     for i in range(len(pacientes)):
-      print(f"{i+1}. Nombre = {pacientes[i][1]} | Cedula = {pacientes[i][0]}")
+      print(f"{i+1}. Nombre: {pacientes[i][1]} Cedula: {pacientes[i][0]}")
+      #print("Problemas: {pacientes[i][2]}")
     print("")
   if opcion == 5:
     borrarDatos = None
