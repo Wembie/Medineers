@@ -7,6 +7,7 @@ def menu():
   print("0. Salir.")
 opcion = -1
 while opcion != 0:
+  menu()
   while True:
     try:
       opcion = int(input("Digite el numero deseado [0,1,2,3,4]: "))
