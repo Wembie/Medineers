@@ -1,14 +1,22 @@
-print("Hola Wembie")
+#Developed by:
+
+#Wembie.
+#Juan Jose Restrepo.
+#Daniela Gomez.
+#Jose Miguel Lopez.
+
 import marshal
 import os.path as path
 from os import remove
+
 def menu():
   print("1. Registrar paciente")
   print("2. Buscar paciente")
   print("3. Borrar paciente")
   print("4. Ver total pacientes")
   print("5. Borrar datos")
-  print("0. Salir.")  
+  print("0. Salir.")
+  
 opcion = None
 pacientes = []
 if path.exists("pacientes"):
@@ -95,9 +103,10 @@ while opcion != 0:
     if encontroCedula is None:
       print("No se ha encontrado la cedula") 
   if opcion == 4:
-    print("——— Pacientes ———")
+    print("——— Pacientes ———\n")
+    print(f"Total: {len(pacientes)}")
     for i in range(len(pacientes)):
-      print(f"{i+1}. Nombre: {pacientes[i][1]} Cedula: {pacientes[i][0]}")
+      print(f"{i+1}. Nombre: {pacientes[i][1]} | Cedula: {pacientes[i][0]}")
       #print(f"Problemas: {pacientes[i][2]}")
     print("")
   if opcion == 5:
