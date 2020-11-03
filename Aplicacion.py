@@ -1,11 +1,16 @@
 print("Hola Wembie")
+import marshal
 def menu():
-  print("1. Registrar.")
+  print("1. Registrar paciente.")
   print("2. Buscar paciente")
   print("3. Borrar paciente")
   print("4. Ver total pacientes.")
-  print("0. Salir.")
-opcion = -1
+  print("0. Salir.")  
+opcion = None
+pacientes = []
+archivo = open("pacientes","br")
+pacientes = marshal.load(archivo)
+archivo.close()
 while opcion != 0:
   menu()
   while True:
@@ -18,4 +23,24 @@ while opcion != 0:
         break
       else:
         print("Numero invalido")
-        print("Por favor digitelo nuevamente")        
+        print("Por favor digitelo nuevamente")
+  if opcion == 1:
+    paciente = []
+    nombreCompleto = input("Digite su nombre completo: ")
+    cedula = None
+    while True:
+      try:
+        cedula = int(input("Digite su cedula: "))
+      except ValueError:
+        print("Solo se recibe numeros enteros")
+      else:
+        break
+    paciente.append(cedula)
+    paciente.append(nombreCompleto)
+    pacientes.append(paciente)
+    archivo = open("pacientes","bw")
+    marshal.dump(pacientes,archivo)
+    archivo.close()
+    
+    
+    
