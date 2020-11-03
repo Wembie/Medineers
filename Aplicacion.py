@@ -98,7 +98,7 @@ while opcion != 0:
     print("——— Pacientes ———")
     for i in range(len(pacientes)):
       print(f"{i+1}. Nombre: {pacientes[i][1]} Cedula: {pacientes[i][0]}")
-      #print("Problemas: {pacientes[i][2]}")
+      #print(f"Problemas: {pacientes[i][2]}")
     print("")
   if opcion == 5:
     borrarDatos = None
