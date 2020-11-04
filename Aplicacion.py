@@ -5,14 +5,28 @@
 #Daniela Gomez.
 #Jose Miguel Lopez.
 
+#PASOS A SEGUIR!
+
+#1. instalar "https://bootstrap.pypa.io/get-pip.py"
+#2. correrlo
+#3. tecla Windows + X -> abrir PowerShell COMO ADMIN
+#4. colocar ->
+#5. pip install pandas
+#6. pip install openxmllib
+#7. pip install openpyxl
+#8. pip install validate_email
+
 import marshal
 import random as rd
 import os
+import pandas as pd
 import os.path as path
 from os import remove
-from smtplib import SMTP
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
+from smtplib import SMTP
+from openpyxl.workbook import Workbook
+from validate_email import validate_email
 
 def enviarEmail(email, asunto):
   mensaje = MIMEMultipart("plain")
@@ -20,8 +34,8 @@ def enviarEmail(email, asunto):
   mensaje["To"] = email
   mensaje["Subject"] = asunto
   adjunto = MIMEBase("application", "octect-stream")
-  adjunto.set_payload(open("respuestaEncuesta.txt", "rb").read())
-  adjunto.add_header("content-Disposition", 'attachment; filename="mensaje.txt"')
+  adjunto.set_payload(open("respuestaEncuesta.xlsx", "rb").read())
+  adjunto.add_header("content-Disposition", 'attachment; filename="respuestaEncuesta.xlsx"')
   mensaje.attach(adjunto)
   smtp = SMTP("smtp.gmail.com")
   smtp.starttls()
@@ -161,33 +175,62 @@ while True:
       print("Por favor digitelo nuevamente")
 if opcionCE == 1:
   nombre = input("Digita tu nombre completo: ")
-  email = input("Digita tu email: ")
-  archivo = open("respuestaEncuesta.txt", "w")
-  archivo.write(nombre + "\n")
-  archivo.close()
+  while True:
+    emailVerificado = None
+    email = input("Digita tu email: ")
+    print("\nVerificando correo...")
+    emailVerificado = validate_email(email)
+    if emailVerificado is True:
+      print("Email valido\n")
+      break
+    else:
+      print("Email invalido\n")
+  print("Acontinuacion te haremos 5 preguntas...\n")
+  print("Por favor te pedimos contestarlas honestamente")
+  print("Para que uno de nuestros asesores se ponga en")
+  print("Contacto contigo via e-mail\n")
+  estasSeguro = None
+  while True:
+    estasSeguro = input("Estas listo? [ Si / No ]: ")
+    if estasSeguro == "Si" or estasSeguro == "sI" or estasSeguro == "SI" or estasSeguro == "si":
+      break
+    elif estasSeguro == "No" or estasSeguro == "nO" or estasSeguro == "NO" or estasSeguro == "no":
+      salir = None
+      while True:
+        salir = input("Deseas salir ? [ Si / No ]: ")
+        if salir == "Si" or salir == "sI" or salir == "SI" or salir == "si":
+          exit()
+        elif salir == "No" or salir == "nO" or salir == "NO" or salir == "no":
+          break
+        else:
+          print("Caracter invalido")
+          print("Por favor digitelo nuevamente")
+    else:
+      print("Caracter invalido")
+      print("Por favor digitelo nuevamente")
+  print("\nComencemos!!!\n")
   bancoPreguntas = ["Como te sientes hoy?", "Estas aburrido?", "Te has alimentado bien?", "Te ha afectado no salir?", "Que haces en tu tiempo libre?", "Has hecho deporte?", "Te llevas bien con las personas que viven bajo tu mismo techo?" ]
-  #bancoRespuesta = []
+  bancoRespuestas = {}
+  preguntas = []
+  respuestas = []
+  bancoRespuestas['nombre'] = nombre
   indice = 0  
   while indice < 5:
-    respuesta = []
-    preguntaAleatoria = rd.randint(0,len(bancoPreguntas.copy()))
-    respuestaUsuario = input(f"{bancoPreguntas[preguntaAleatoria]}: ")
-    #respuesta.append(bancoPreguntas[preguntaAleatoria])
-    #respuesta.append(respuestaUsuario)
-    #bancoRespuesta.append(respuesta)
-    archivo = open("respuestaEncuesta.txt", "w")
-    archivo.write("Pregunta" + "\n")
-    archivo.write(bancoPreguntas[preguntaAleatoria] + "\n")
-    archivo.write("Respuesta" + "\n")
-    archivo.write(respuestaUsuario + "\n\n")
-    archivo.close()
-    indice += 1
-    bancoPreguntas.pop(preguntaAleatoria)
-    #falta cambiar a diccionario bancoRespuesta = [] y enviarlo a un excel o word y borrar los archivos open de respuestaEncuentas
-  enviarEmail(email, f("Respuesta de {nombre}"))
+    preguntaAleatoria = rd.randint(0,len(bancoPreguntas)-1)
+    if bancoPreguntas[preguntaAleatoria] not in preguntas:
+      respuestaUsuario = input(f"{bancoPreguntas[preguntaAleatoria]}: ")
+      preguntas.append(bancoPreguntas[preguntaAleatoria])
+      respuestas.append(respuestaUsuario)
+      indice += 1
+  bancoRespuestas['preguntas'] = preguntas
+  bancoRespuestas['respuestas'] = respuestas
+  excel = pd.DataFrame(bancoRespuestas, columns = ['nombre', 'preguntas', 'respuestas'])
+  excel.to_excel('respuestaEncuesta.xlsx', sheet_name='respuestaEncuesta')
+  print("\nEnviando email...\n")
+  enviarEmail(email, f"Respuesta de {nombre}")
   print("Tu registro se ha completado con exito!")
   print("Gracias por responder")
-  remove("respuestaEncuesta.txt")
+  remove("respuestaEncuesta.xlsx")
 if opcionCE == 2:
   intentos = 3
   while True:
