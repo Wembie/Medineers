@@ -1,4 +1,4 @@
-# Medineers
+//Medineers
 #include <stdio.h>
 
 int main(){
