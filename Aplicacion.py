@@ -740,9 +740,9 @@ def preguntarNumero(inicio, final, recuadro):
         
 def enviarEmail(email, asunto):
   mensaje = MIMEMultipart("plain")
-  mensaje["From"]="medineerscolombia@gmail.com"
-  mensaje["To"]= email
-  mensaje["Subject"]= asunto
+  mensaje["From"] = "medineerscolombia@gmail.com"
+  mensaje["To"] = email
+  mensaje["Subject"] = asunto
   adjunto = MIMEBase("application", "octect-stream")
   adjunto.set_payload(open("respuestaEncuesta.xlsx", "rb").read())
   encoders.encode_base64(adjunto)
