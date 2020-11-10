@@ -1,7 +1,6 @@
 #Developed by:
 
 #Wembie.
-#Juan Jose Restrepo.
 
 #PASOS A SEGUIR!
 
@@ -27,7 +26,7 @@ from openpyxl.workbook import Workbook
 from validate_email import validate_email
 
 def mostrarTips():
-  print("\n1. ¿Cómo puedo dormir mejor?")
+  print("1. ¿Cómo puedo dormir mejor?")
   print("2. ¿Cómo puedo conseguir bienestar psicológico?")
   print("3. ¿Cómo puedo sentirme mejor en la cuarentena?")
   print("4. ¿Cómo puedo superar la depresion?")
@@ -607,6 +606,70 @@ Para conseguirlo, aprende a luchar sin resistirte. Sentirte solo es un sentimien
 
 Una vez aprendas a convivir pacíficamente con la soledad, pon la primera piedra para que no tenga que regresar. Sal, haz ejercicio, crea rutinas y conecta con gente nueva. Descubrirás que tu círculo de soledad es tan pequeño como tú quieres que sea.""")
 
+def opciones():
+  print("\n0 -> Nunca")
+  print("1 -> Varios dias")
+  print("2 -> Mas de la mitad de los dias")
+  print("3 -> Casi cada dia")
+
+def tablaResultados(resultado, nombre):
+  print(f"\n-> RESULTADOS: {resultado} <-\n")
+  print("Menor a 13 -> No eres depresivo")
+  print("Menor a 26 -> Eres un poco depresivo")
+  print("Menor a 39 -> Eres medianamente depresivo")
+  print("Mayor a 39 -> Eres depresivo\n")
+  if resultado <= 13:
+    print(f"{nombre} no eres depresivo")
+    #Le aumentan mas cosas.. nose q mas equisde
+  if resultado <= 26 and resultado >= 13 :
+    print(f"{nombre} eres un poco depresivo")
+    #Le aumentan mas cosas.. nose q mas equisde x2
+  if resultado <= 39 and resultado >= 26 :
+    print(f"{nombre} eres medianamente depresivo")
+    #Le aumentan mas cosas.. nose q mas equisde x3
+  if resultado > 39:
+    print(f"{nombre} eres depresivo")
+    #Le aumentan mas cosas.. nose q mas equisde x4
+    
+def teleDiagnostico():
+  print("TEST PARA DEPRESION\n")
+  nombre = input("Digita tu nombre: ")
+  preguntas = ["Poco interés o alegría por hacer cosas",
+               "Sensación de estar decaído/a, deprimido/a o desesperanzado/a",
+               "Problemas para quedarse dormido/a, seguir durmiendo o dormir demasiado",
+               "Sensación de cansancio o de tener poca energía",
+               "Poco apetito o comer demasiado",
+               "Sentirse mal consigo mismo/a; sentir que es un/a fracasado/a; o que ha decepcionado a su familia o a sí mismo/a",
+               "Problemas para concentrarse en algo, como leer el periódico o ver televisión",
+               "Moverse o hablar tan despacio que los demás pueden haberlo notado. O lo contrario, estar tan inquieto/a o agitado/a que se ha estado moviendo de un lado a otro más de lo habitual",
+               "Pensamientos de que estaría mejor muerto/a o de querer hacerse daño de algún modo"]
+  inicio = 0
+  resultado = 0 #Mayor posible -> 54
+  while inicio <= 8:
+    print(f"\nPregunta {inicio + 1}: {preguntas[inicio]}")
+    opcionPregunta = None
+    opciones()
+    while True:
+      try:
+        opcionPregunta = int(input("\nDigite el numero deseado: "))
+      except ValueError:
+        print("\nSolo se recibe numeros enteros")
+      else:
+        if opcionPregunta <= 3 and opcionPregunta >= 0:
+          if opcionPregunta == 0: #NUNCA
+            resultado += 0
+          if opcionPregunta == 1: #VARIOS DIAS
+            resultado += 1
+          if opcionPregunta == 2: #MAS DE LA MITAD DE LOS DIAS
+            resultado += 3
+          if opcionPregunta == 3: #CASI CADA DIA
+            resultado += 6
+          break
+        else:
+          print("Numero invalido")
+          print("Por favor digitelo nuevamente")
+    inicio += 1
+  tablaResultados(resultado, nombre)
 def premium():
   link = "paypal.me/acostalopez"
   dinero = "$40 USD"
@@ -624,17 +687,27 @@ def premium():
   print("Pronto verificaremos el pago y con ello")
   print("Te enviaremos a tu correo la contraseña del plan premium")
   exit()
+
+def gratis():
+  print("\n1. Tips")
+  print("2. Tele Diagnostico")
+  print("0. Salir.")
   
 def elegirTip():
   while True:
     mostrarTips()
     opcionElegirTip = None
     while True:
-      opcionElegirTip = int(input("\nDigite el numero deseado: "))
-      if opcionElegirTip <= 6 and opcionElegirTip >= 0:
-        break
+      try:
+        opcionElegirTip = int(input("\nDigite el numero deseado: "))
+      except ValueError:
+        print("\nSolo se recibe numeros enteros")
       else:
-        print("\nNumero invalido, porfavor digitalo nuevamente.")
+        if opcionElegirTip <= 6 and opcionElegirTip >= 0:
+          break
+        else:
+          print("Numero invalido")
+          print("Por favor digitelo nuevamente")
     if opcionElegirTip == 1:
       dormirMejor()
     if opcionElegirTip == 2:
@@ -675,7 +748,7 @@ def enviarEmail(email, asunto):
   mensaje.attach(adjunto)
   smtp = SMTP("smtp.gmail.com")
   smtp.starttls()
-  smtp.login("medineerscolombia@gmail.com", "UserMedineers69")
+  smtp.login("medineerscolombia@gmail.com", "Medineers69XD")
   smtp.sendmail("medineerscolombia@gmail.com", email, mensaje.as_string())
   print("Correo enviado exitosamente")
   smtp.quit()
@@ -780,7 +853,7 @@ def menu():
   print("0. Salir")
 
 bienvenida()
-SERVER_PASSWORD = "UserMedineers69"
+SERVER_PASSWORD = "UserMedineers69" #tambien se pude hacer generando contraseña aleatoria y q se la envie al correo y la digite
 PREMIUM_PASSWORD = ["asu98bp[gd.<:>?>;'[['[;]',", "AUIHYGVaksii2894537", "ALoPExxnujofgb25}{}{}#(&*^$(", "AHVZTC@648^&*@%#!(H", "WASDwasd123321!@#$%^&*()_++_)(*&^%$#@!"]
 opcionPrincipal = None
 while True:
@@ -825,7 +898,15 @@ if opcionCE == 1:
   opcionGP = preguntarNumero( 0, 2, "[0,1,2]")
   if opcionGP == 1:
     print("___ VERSION GRATIS ___")
-    elegirTip()
+    while True:
+      gratis()
+      opcionGratis = preguntarNumero( 0, 2, "[0,1,2]")  
+      if opcionGratis == 1:
+        elegirTip()
+      if opcionGratis == 2:
+        teleDiagnostico()
+      if opcionGratis == 0:
+        break  
   if opcionGP == 2:
     while True:
       premiumPassword = input("Digite la contraseña del servidor: ")
