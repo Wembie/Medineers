@@ -22,6 +22,7 @@ from os import remove
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from smtplib import SMTP
+from email import encoders
 from openpyxl.workbook import Workbook
 from validate_email import validate_email
 
@@ -739,18 +740,19 @@ def preguntarNumero(inicio, final, recuadro):
         
 def enviarEmail(email, asunto):
   mensaje = MIMEMultipart("plain")
-  mensaje["From"] = "medineerscolombia@gmail.com"
-  mensaje["To"] = email
-  mensaje["Subject"] = asunto
+  mensaje["From"]="medineerscolombia@gmail.com"
+  mensaje["To"]= email
+  mensaje["Subject"]= asunto
   adjunto = MIMEBase("application", "octect-stream")
   adjunto.set_payload(open("respuestaEncuesta.xlsx", "rb").read())
+  encoders.encode_base64(adjunto)
   adjunto.add_header("content-Disposition", 'attachment; filename="respuestaEncuesta.xlsx"')
   mensaje.attach(adjunto)
   smtp = SMTP("smtp.gmail.com")
   smtp.starttls()
   smtp.login("medineerscolombia@gmail.com", "Medineers69XD")
-  smtp.sendmail("medineerscolombia@gmail.com", email, mensaje.as_string())
-  print("Correo enviado exitosamente")
+  smtp.sendmail("medineerscolombia@gmail.com",email, mensaje.as_string())
+  print("Correo Enviado Exitosamente")
   smtp.quit()
   
 def nuevoUsuario():
@@ -978,7 +980,7 @@ if opcionCE == 1:
     excel = pd.DataFrame(bancoRespuestas, columns = ['email', 'nombre', 'preguntas', 'respuestas'])
     excel.to_excel('respuestaEncuesta.xlsx', sheet_name='respuestaEncuesta')
     print("\nEnviando email...\n")
-    enviarEmail(correo, f"Formulario de {nombre}")
+    enviarEmail(email, f"Formulario de {nombre}")
     print("Tu registro se ha completado con exito!")
     print("Gracias por responder")
     remove("respuestaEncuesta.xlsx")
