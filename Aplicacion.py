@@ -751,7 +751,7 @@ def enviarEmail(email, asunto):
   smtp = SMTP("smtp.gmail.com")
   smtp.starttls()
   smtp.login("medineerscolombia@gmail.com", "Medineers69XD")
-  smtp.sendmail("medineerscolombia@gmail.com",email, mensaje.as_string())
+  smtp.sendmail("medineerscolombia@gmail.com", email, mensaje.as_string())
   print("Correo Enviado Exitosamente")
   smtp.quit()
   
