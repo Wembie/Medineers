@@ -92,7 +92,7 @@ def preguntas(preguntas):
     return contadorSi, contadorNO
 
 def diagnostico(resultado):
-    porcentaje = 0
+    
     porcentaje = round(((resultado*100)/9), 2 )
     if resultado > 6:
         print("Presenta sintomas graves. Recomendamos la atencion de un profesional urgentemente. Tienes un {} %".format(porcentaje) + " de depresion")
