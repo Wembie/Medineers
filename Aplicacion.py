@@ -18,6 +18,7 @@ import random as rd
 import os
 import pandas as pd
 import os.path as path
+import datetime
 from os import remove
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
@@ -25,7 +26,6 @@ from smtplib import SMTP
 from email import encoders
 from openpyxl.workbook import Workbook
 from validate_email import validate_email
-import datetime
 
 def mostrarTips():
   print("1. ¿Cómo puedo dormir mejor?")
