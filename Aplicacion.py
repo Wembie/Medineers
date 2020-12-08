@@ -631,6 +631,8 @@ def tablaResultados(resultado, nombre):
   if resultado > 39:
     print(f"{nombre} eres depresivo")
     #Le aumentan mas cosas.. nose q mas equisde x4
+
+#Aqui diario
     
 def teleDiagnostico():
   print("TEST PARA DEPRESION\n")
@@ -692,7 +694,9 @@ def premium():
 def gratis():
   print("\n1. Tips")
   print("2. Tele Diagnostico")
+  print("3. Diario")
   print("0. Salir.")
+ 
   
 def elegirTip():
   while True:
@@ -907,6 +911,8 @@ if opcionCE == 1:
         elegirTip()
       if opcionGratis == 2:
         teleDiagnostico()
+      if opcionGratis == 3:
+        diario()
       if opcionGratis == 0:
         break  
   if opcionGP == 2:
