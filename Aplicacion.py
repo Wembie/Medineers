@@ -25,6 +25,7 @@ from smtplib import SMTP
 from email import encoders
 from openpyxl.workbook import Workbook
 from validate_email import validate_email
+import datetime
 
 def mostrarTips():
   print("1. ¿Cómo puedo dormir mejor?")
