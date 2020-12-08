@@ -41,13 +41,19 @@ def menu():
 
 
 
-def crearE(x:int, entrada:[]):
+def crearE(x:int, entrada : {}):
     entrada['nombre'].append(input("Ingrese su nombre completo:\n"))
     entrada['fecha'].append(datetime.datetime.now())
     entrada['animo'].append(int(input("Del 1 al 10 ¿Cómo se siente hoy?\n")))
     excel = pd.DataFrame(entrada)
     excel.to_excel()
 
+def verE(entrada : {}):
+    n, f, a, s = entrada['nombre'], entrada['fecha'], entrada['animo'], ""
+    for i in range(n):
+        s = n[i] + str(f[i]) + str(a[i])
+        print s
+        
     
 def prom(entrada) :
     ac = 0
