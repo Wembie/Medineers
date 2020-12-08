@@ -632,7 +632,7 @@ def tablaResultados(resultado, nombre):
     print(f"{nombre} eres depresivo")
     #Le aumentan mas cosas.. nose q mas equisde x4
 
-def menu():
+def diario():
     veces = 0
     entrada = {'nombre':[],'fecha':[],'animo':[]}
     while True:
