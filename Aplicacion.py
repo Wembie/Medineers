@@ -957,7 +957,7 @@ if opcionCE == 1:
     print("___ VERSION GRATIS ___")
     while True:
       gratis()
-      opcionGratis = preguntarNumero( 0, 3, "[0,1,2]")  
+      opcionGratis = preguntarNumero( 0, 3, "[0,1,2,3]")  
       if opcionGratis == 1:
         elegirTip()
       if opcionGratis == 2:
